@@ -1,0 +1,21 @@
+redis前缀：'lty:'
+
+奖品缓存key：lty:prize:{p_id}
+内容：p_id、p_name、create_uid、p_image_uri、p_probability、p_actual_probability、create_time
+
+奖品的库存缓存key：lty:prize:inventory:{p_id}
+内容：p_inventory
+
+用户的抽奖机会缓存key：lty:chance:{uid}:{today}
+内容：c_num
+
+用户是否获取机会缓存key：lty:ischance:{uid}:{today}
+内容：1 OR 0
+
+
+用户的信息缓存key：lty:userinfo:{uid}
+内容：m_uid、m_phone、m_password、m_openid、m_username、m_email、m_ip、m_state、create_time
+
+用户是否中奖缓存key：lty:iswinning:{uid}:{today}
+内容：1 OR 0
+

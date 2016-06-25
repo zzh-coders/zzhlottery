@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>lottery.yboard.cn</title>
+    <meta name="keywords" content="lottery.yboard.cn"/>
+    <meta name="description" content="lottery.yboard.cn"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link rel="stylesheet" href="<?php echo __ASSETS__; ?>/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="<?php echo __ASSETS__; ?>/font-awesome/4.5.0/css/font-awesome.min.css"/>
+
+    <!-- text fonts -->
+    <!--<link rel="stylesheet" href="<?php echo __ASSETS__; ?>/fonts/fonts.googleapis.com.css" />-->
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="<?php echo __ASSETS__; ?>/css/ace.min.css"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="<?php echo __ASSETS__;?>/css/ace-part2.min.css"/>
+    <![endif]-->
+    <link rel="stylesheet" href="<?php echo __ASSETS__; ?>/css/ace-rtl.min.css"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="<?php echo __ASSETS__;?>/css/ace-ie.min.css"/>
+    <![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+    <!--[if lt IE 9]>
+    <script src="<?php echo __ASSETS__;?>/js/html5shiv.min.js"></script>
+    <script src="<?php echo __ASSETS__;?>/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="login-layout blur-login">
+<div class="main-container">
+    <div class="main-content">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <div class="login-container">
+                    <div class="center">
+                        <h1>
+                            <i class="icon-leaf green"></i>
+                            <span class="red">lottery.yboard.cn</span>
+                            <span class="white"></span>
+                        </h1>
+                        <h4 class="blue"></h4>
+                    </div>
+
+                    <div class="space-6"></div>
+
+                    <div class="position-relative">
+                        <div id="login-box" class="login-box visible widget-box no-border">
+                            <div class="widget-body">
+                                <div class="widget-main">
+                                    <h4 class="header blue lighter bigger">
+                                        <i class="ace-icon fa fa-users blue"></i>
+                                        请输入您的帐号
+                                    </h4>
+
+                                    <div class="space-6"></div>
+
+                                    <form class="login-form" action="<?php echo base_url('admin/Public/login');?>" method="post">
+                                        <fieldset>
+                                            <label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="text" name="username" class="form-control" autocomplete="off" placeholder="输入帐号" value=""/>
+															<i class="ace-icon fa fa-envelope"></i>
+														</span>
+                                            </label>
+
+                                            <label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="password" name="password" class="form-control" autocomplete="off" placeholder="输入密码" value=""/>
+															<i class="ace-icon fa fa-user"></i>
+														</span>
+                                            </label>
+
+<!--                                            <label class="block clearfix">-->
+<!--                                                <span class="block input-icon input-icon-right">-->
+<!--                                                    <input type="text" name="verify" placeholder="请填写验证码" autocomplete="off" class="form-control">-->
+<!--                                                    <i class="ace-icon fa fa-history reloadverify_img" id="reloadverify"></i>-->
+<!--                                                </span>-->
+<!--                                            </label>-->
+<!--                                            <div>-->
+<!--                                                <img class="verifyimg reloadverify reloadverify_img" alt="点击切换" src="/Public/verify">-->
+<!--                                            </div>-->
+<!---->
+<!--                                            <div class="space"></div>-->
+
+                                            <div class="clearfix">
+                                                <label class="inline check-tips red">
+
+                                                </label>
+                                                <button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+                                                    <i class="icon-key"></i>
+                                                    登录
+                                                </button>
+                                            </div>
+
+                                            <div class="space-4"></div>
+                                        </fieldset>
+                                    </form>
+
+                                </div><!-- /widget-main -->
+                            </div><!-- /widget-body -->
+                            <div class="toolbar clearfix">
+                                <div  style="text-align: center;width: 100%;float: none;">
+                                    <a href="<?php echo base_url('admin/Public/register');?>" class="user-signup-link">
+                                        没有帐号，我要注册
+                                    </a>
+                                </div>
+                            </div>
+                        </div><!-- /login-box -->
+                    </div><!-- /position-relative -->
+                </div>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div>
+</div><!-- /.main-container -->
+<!--[if !IE]> -->
+<script src="<?php echo __ASSETS__; ?>/js/jquery.2.1.1.min.js"></script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script src="<?php echo __ASSETS__;?>/js/jquery.1.11.1.min.js"></script>
+<![endif]-->
+
+<!--[if !IE]> -->
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='<?php echo __ASSETS__;?>/js/jquery.min.js'>" + "<" + "/script>");
+</script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='<?php echo __ASSETS__;?>/js/jquery1x.min.js'>" + "<" + "/script>");
+</script>
+<![endif]-->
+
+<!-- inline scripts related to this page -->
+
+<script type="text/javascript">
+    function show_box(id) {
+        jQuery('.widget-box.visible').removeClass('visible');
+        jQuery('#' + id).addClass('visible');
+    }
+    //表单提交
+    $(document).ajaxStart(function () {
+        $("button:submit").addClass("log-in").attr("disabled", true);
+    })
+        .ajaxStop(function () {
+            $("button:submit").removeClass("log-in").attr("disabled", false);
+        });
+
+    $("form").submit(function () {
+        var self = $(this);
+        $.post(self.attr("action"), self.serialize(), success, "json");
+        return false;
+
+        function success(data) {
+            if (data.code == 200) {
+                window.location.href = data.url;
+            } else {
+                self.find(".check-tips").text(data.message);
+                //刷新验证码
+//                $("#reloadverify").click();
+            }
+        }
+    });
+
+    $(function () {
+        //初始化选中用户名输入框
+        $("#itemBox").find("input[name=username]").focus();
+        //刷新验证码
+//        var verifyimg = $(".verifyimg").attr("src");
+//        $(".reloadverify_img").click(function () {
+//            if (verifyimg.indexOf('?') > 0) {
+//                $(".verifyimg").attr("src", verifyimg + '&random=' + Math.random());
+//            } else {
+//                $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/, '') + '?' + Math.random());
+//            }
+//        });
+
+    });
+</script>
+</body>
+</html>

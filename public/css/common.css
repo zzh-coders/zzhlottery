@@ -1,0 +1,32 @@
+#msg-pop {
+    position: absolute;
+    top: 60px;
+    text-align: center;
+    z-index: 10000;
+    width: 100%;
+    font-size: 12px;
+}
+
+#msg-pop-body {
+    border-radius: 3px 3px 3px 3px;
+    height: 20px;
+    line-height: 18px;
+    padding: 3px 24px
+}
+
+.msg-pop-ok {
+    background: #02AE0E;
+    color: #FFFFFF;
+}
+
+.msg-pop-error {
+    background: #E63F00;
+    color: #FFFFFF;
+}
+
+.msg-pop-warn { background: rgb(239, 143, 0);  color: #FFFFFF;  }
+.colorpicker{z-index: 9999;}
+
+.table td{
+    vertical-align: middle !important;
+}

@@ -1,0 +1,132 @@
+<?php Yaf\loader::import(__HEADER__); ?>
+
+<div class="row">
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <div class="row">
+            <div class="col-xs-12">
+                <div>
+                    <button class="btn btn-xs  btn-success" id="addForm" dialog-title="增加项目" data-dialog="myDialog" data-action="<?php echo base_url('index/add'); ?>">
+                        <i class="ace-icon fa  fa-plus bigger-110"></i>
+                        <span class="bigger-110 no-text-shadow">新增</span>
+                    </button>
+                    <button class="btn btn-xs   btn-warning" id="editForm" dialog-title="编辑项目" data-pk="item_id" data-dialog="myDialog" data-info-url="<?php echo base_url('index/getItemById'); ?>" data-action="<?php echo base_url('index/edit'); ?>">
+                        <i class="ace-icon fa fa-pencil bigger-110"></i>
+                        <span class="bigger-110 no-text-shadow">编辑</span>
+                    </button>
+                    <button class="btn btn-xs   btn-danger" id="delForm" data-pk="item_id" data-action="<?php echo base_url('index/del'); ?>">
+                        <i class="ace-icon glyphicon glyphicon-trash bigger-110"></i>
+                        <span class="bigger-110 no-text-shadow">删除</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="hr hr-10 dotted"></div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <table id="table"
+                       class="table table-striped table-bordered table-hover"
+                       data-click-to-select="true"
+                       data-page-size="<?php echo $limit; ?>"
+                       data-toggle="table"
+                       data-url="<?php echo base_url('index/getList'); ?>"
+                       data-side-pagination="server"
+                       data-pagination="true"
+                       data-page-list="[<?php echo $limit; ?>]"
+                >
+                    <thead>
+                    <tr>
+                        <th data-checkbox="true" data-class="center"></th>
+                        <th data-field="uid">创建人</th>
+                        <th data-field="item_name">项目名称</th>
+                        <th data-field="item_description">项目描述</th>
+                        <th data-field="create_time">添加时间</th>
+                        <th data-field="item_id" data-formatter="optionFormatter">操作</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div><!-- /.span-->
+        </div><!-- /.row -->
+
+        <script type="text/html" id="myDialog">
+            <div class="row">
+                <div class="col-xs-12">
+                    <form id="myForm" action="<%=data.action%>" method="post">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="name"> 项目名称</label>
+
+                                <div class="col-sm-6">
+                                    <input type="text" name="item_name" placeholder="项目名称" class="col-xs-12" value="<%=data.info.item_name%>" required/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="show_index"> 项目描述</label>
+
+                                <div class="col-sm-6">
+                                    <textarea name="item_description" id="item_description" type="text" placeholder="项目描述" class="col-xs-12"><%=data.info.item_description%></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" value="<%=data.info.item_id%>" name="item_id">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </script>
+    </div><!-- /.col -->
+</div><!-- /.row -->
+
+<?php Yaf\loader::import(__FOOTER__); ?>
+
+<script>
+    $(function (e) {
+        yboard.init();
+    });
+
+    function optionFormatter(value) {
+        return (value) ? '<a class="btn btn-white btn-purple btn-sm" href="<?php echo base_url('items');?>/' + value + '">进入项目</a>' : '';
+    }
+
+    function getFormData(obj, callBack) {
+        var dataAction = obj.attr('data-action'), dataInfoUrl = obj.attr('data-info-url'), formData = {
+            action: dataAction,
+            info: {
+                item_id: '',
+                item_name: '',
+                item_description: ''
+            }
+        };
+        if (typeof (dataInfoUrl) != 'undefined' && dataInfoUrl != '') {
+            var item_id = $($(yboard.config.tableId)).getListIds('item_id', true);
+            if (!item_id) {
+                return false;
+            }
+            $.get(dataInfoUrl, {item_id: item_id}, function (data) {
+                if (data.code == 200) {
+                    formData = {
+                        action: dataAction,
+                        info: {
+                            item_id: data.data.item_id,
+                            item_name: data.data.item_name,
+                            item_description: data.data.item_description
+                        }
+                    };
+                    callBack(formData);
+                }
+            }, 'json');
+        } else {
+            callBack(formData);
+        }
+    }
+
+    function dialogShow() {
+        return false;
+
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>lottery.yboard.cn</title>
+
+    <meta name="description" content="overview &amp; stats"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="<?php echo __ASSETS__; ?>/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="<?php echo __ASSETS__; ?>/font-awesome/4.5.0/css/font-awesome.min.css"/>
+
+    <!-- page specific plugin styles -->
+    <?php echo isset($block['style']) ? $block['style'] : ''; ?>
+    <!-- text fonts -->
+    <!--<link rel="stylesheet" href="<?php echo __ASSETS__; ?>/fonts/fonts.googleapis.com.css"/>-->
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="<?php echo __ASSETS__; ?>/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="<?php echo __ASSETS__;?>/css/ace-part2.min.css" class="ace-main-stylesheet"/>
+    <![endif]-->
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="<?php echo __ASSETS__;?>/css/ace-ie.min.css"/>
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+
+    <!-- ace settings handler -->
+    <script src="<?php echo __ASSETS__; ?>/js/ace-extra.min.js"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="<?php echo __ASSETS__;?>/js/html5shiv.min.js"></script>
+    <script src="<?php echo __ASSETS__;?>/js/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="<?php echo __CSS__; ?>common.css"/>
+</head>
+
+<body class="no-skin">
+<div id="navbar" class="navbar navbar-default">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('navbar', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <div class="navbar-container" id="navbar-container">
+        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+            <span class="sr-only">Toggle sidebar</span>
+
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+        </button>
+
+        <div class="navbar-header pull-left">
+            <a href="/Index/index" class="navbar-brand">
+                <small>
+                    <i class="fa fa-leaf"></i>
+                    lottery.yboard.cn
+                </small>
+            </a>
+        </div>
+
+        <div class="navbar-buttons navbar-header pull-right" role="navigation">
+            <ul class="nav ace-nav">
+                <?php if ($userinfo) { ?>
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            <img class="nav-user-photo" src="<?php echo __ASSETS__; ?>/avatars/user.jpg" alt="<?php echo $userinfo['a_account']; ?>"/>
+                                    <span class="user-info">
+                                        <small>欢迎光临,</small>
+                                        <?php echo $userinfo['a_account']; ?>
+                                    </span>
+
+                            <i class="ace-icon fa fa-caret-down"></i>
+                        </a>
+
+                        <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li>
+                                <a id="loginOut" href="javascript:;" data-url="<?php echo base_url('public/loginout'); ?>">
+                                    <i class="ce-icon fa fa-power-off"></i>
+                                    退出
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                <?php } else { ?>
+                    <li class="green">
+                        <a href="<?php echo base_url('Public/login'); ?>" class="dropdown-toggle">
+                            登录
+                        </a>
+                    </li>
+                    <li class="grey">
+                        <a href="<?php echo base_url('Public/register'); ?>" class="dropdown-toggle">
+                            注册
+                        </a>
+                    </li>
+                <?php } ?>
+            </ul>
+        </div>
+    </div><!-- /.navbar-container -->
+</div>
+
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+    </script>
+        <div id="sidebar" class="sidebar                  responsive">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('sidebar', 'fixed')
+                } catch (e) {
+                }
+            </script>
+
+            <ul class="nav nav-list">
+                <li>
+                    <a href="<?php echo base_url('admin/index/index');?>">
+                        <i class="menu-icon fa fa-tachometer"></i>
+                        <span class="menu-text"> 首页管理 </span>
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('admin/member/index');?>">
+                        <i class="menu-icon fa fa-user"></i>
+                        <span class="menu-text"> 用户管理 </span>
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('admin/prize/index');?>">
+                        <i class="menu-icon fa fa-gift"></i>
+                        <span class="menu-text"> 奖品管理 </span>
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('admin/winning/index');?>">
+                        <i class="menu-icon fa fa-star"></i>
+                        <span class="menu-text"> 中奖管理  </span>
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('admin/chance/index');?>">
+                        <i class="menu-icon fa fa-smile-o"></i>
+                        <span class="menu-text"> 抽奖机会  </span>
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-users"></i>
+                        <span class="menu-text"> 管理员管理 </span>
+
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+
+                    <b class="arrow"></b>
+
+                    <ul class="submenu">
+                        <li class="">
+                            <a href="<?php echo base_url('admin/admins/index');?>">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                管理员管理
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+
+                        <li class="">
+                            <a href="<?php echo base_url('admin/admins/adminlog');?>">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                管理员日志
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('admin/setting/index');?>">
+                        <i class="menu-icon fa fa-cog"></i>
+                        <span class="menu-text"> 设置 </span>
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+            </ul><!-- /.nav-list -->
+
+            <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+                <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+            </div>
+
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('sidebar', 'collapsed')
+                } catch (e) {
+                }
+            </script>
+        </div>
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                    try {
+                        ace.settings.check('breadcrumbs', 'fixed')
+                    } catch (e) {
+                    }
+                </script>
+
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home"></i>
+                        <a href="Index/index">首页</a>
+                    </li>
+                    <?php if (isset($nav) && $nav) {
+                        foreach ($nav as $vo) {
+                            if (empty($vo['url'])) {
+                                echo '<li class="active">' . $vo['name'] . '</li>';
+                            } else {
+                                echo '<li><a href="' . $vo['url'] . '">' . $vo['name'] . '</li>';
+                            }
+                        }
+                    } ?>
+                </ul><!-- /.breadcrumb -->
+            </div>
+
+            <div class="page-content">
+                <!-- /.page-header -->

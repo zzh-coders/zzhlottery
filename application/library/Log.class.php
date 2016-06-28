@@ -34,8 +34,15 @@ class Log {
 
     // 日志初始化
     static public function init($config = array()) {
+        spl_autoload_register(function ($class) {
+            if ($class) {
+                $file = str_replace(['\\', 'Yboard/'], ['/', ''], $class);
+                $file .= '.class.php';
+                \Yaf\Loader::import($file);
+            }
+        });
         $type  = isset($config['type']) ? $config['type'] : 'File';
-        $class = strpos($type, '\\') ? $type : 'Think\\Log\\Driver\\' . ucwords(strtolower($type));
+        $class = strpos($type, '\\') ? $type : 'Yboard\\Log\\Driver\\' . ucwords(strtolower($type));
         unset($config['type']);
         self::$storage = new $class($config);
     }
@@ -50,7 +57,7 @@ class Log {
      * @return void
      */
     static function record($message, $level = self::ERR, $record = false) {
-        if ($record || false !== strpos(C('LOG_LEVEL'), $level)) {
+        if ($record || false !== strpos(getConfig('log/level'), $level)) {
             self::$log[] = "{$level}: {$message}\r\n";
         }
     }
@@ -69,11 +76,11 @@ class Log {
         }
 
         if (empty($destination)) {
-            $destination = getConfig('LOG_PATH') . date('y_m_d') . '.log';
+            $destination = getConfig('log/path') . date('y_m_d') . '.log';
         }
         if (!self::$storage) {
-            $type          = $type ? $type : getConfig('LOG_TYPE');
-            $class         = 'Think\\Log\\Driver\\' . ucwords($type);
+            $type          = $type ? $type : getConfig('log/type');
+            $class         = 'Yboard\\Log\\Driver\\' . ucwords($type);
             self::$storage = new $class();
         }
         $message = implode('', self::$log);
@@ -94,12 +101,12 @@ class Log {
      */
     static function write($message, $level = self::ERR, $type = '', $destination = '') {
         if (!self::$storage) {
-            $type          = $type ? $type : getConfig('LOG_TYPE');
+            $type          = $type ? $type : getConfig('log/type');
             $class         = 'Think\\Log\\Driver\\' . ucwords($type);
             self::$storage = new $class();
         }
         if (empty($destination)) {
-            $destination = getConfig('LOG_PATH') . date('y_m_d') . '.log';
+            $destination = getConfig('log/path') . date('y_m_d') . '.log';
         }
         self::$storage->write("{$level}: {$message}", $destination);
     }

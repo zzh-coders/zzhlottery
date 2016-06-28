@@ -15,7 +15,6 @@ $(function (e) {
             }
             //绑定按钮点击事件
             _this.bindBtnClick();
-
             $('input[type=file]').ace_file_input({
                 no_file: '文件上传 ...',
                 btn_choose: '选择',

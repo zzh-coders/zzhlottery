@@ -29,6 +29,18 @@ class AdminController extends Yaf\Controller_Abstract {
         }
     }
 
+    public function noLoginAction() {
+        $no_login_action = array(
+            'Public' => array('login', 'verify', 'register'),
+            'Page'   => array('share')
+        );
+        $request         = $this->getRequest();
+        $controller      = $request->controller;
+        $action          = $request->action;
+
+        return (key_exists($controller, $no_login_action) && in_array($action, $no_login_action[$controller]));
+    }
+
     public function getQuery($key, $filter = true) {
         if ($filter) {
             return filterStr($this->getRequest()->getQuery($key));
@@ -43,8 +55,8 @@ class AdminController extends Yaf\Controller_Abstract {
          * 登录的控制器是Login/Index地方。
          */
         $this->userinfo = getSession('userinfo');
-        if (!$this->userinfo) {
-            $this->redirect(base_url('/Public/Login'));
+        if (!$this->userinfo && !$this->noLoginAction()) {
+            $this->redirect(base_url('admin/Public/Login'));
         }
         $this->output_data['userinfo'] = $this->userinfo;
         $this->output_data['limit']    = $this->limit = 15;

@@ -1,4 +1,5 @@
 <?php
+
 class PublicController extends AdminController {
     public function loginAction() {
         if (IS_AJAX) {
@@ -18,10 +19,10 @@ class PublicController extends AdminController {
 
     public function registerAction() {
         if (IS_AJAX) {
-            $username       = $this->post('username');
-            $password       = $this->post('password');
-            $confirm_pass   = $this->post('confirm_pass');
-            $verify         = $this->post('verify');
+            $username      = $this->post('username');
+            $password      = $this->post('password');
+            $confirm_pass  = $this->post('confirm_pass');
+            $verify        = $this->post('verify');
             $admin_service = $this->loadService('admin');
 
             $ret = $admin_service->register($username, $password, $confirm_pass, $verify);
@@ -34,9 +35,9 @@ class PublicController extends AdminController {
 
     public function verifyAction() {
         ob_clean();
-        Yaf\Loader::import(LIB_PATH . '/Verify.class.php');
+        Yaf\Loader::import('Verify.class.php');
         $verify = new \Yboard\Verify([
-            'imageW'=>290
+            'imageW' => 290
         ]);
         $verify->entry(1);
 

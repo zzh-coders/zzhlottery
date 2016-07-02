@@ -57,7 +57,7 @@ class CommonService {
         return $params;
     }
 
-    public function upload(){
+    public function upload() {
         \Yaf\Loader::import('Upload.class.php');
         $upload            = new \Yboard\Upload();// 实例化上传类
         $upload->maxSize   = 3145728;// 设置附件上传大小
@@ -66,9 +66,9 @@ class CommonService {
         $upload->savePath  = '';// 设置附件上传子目录
         $info              = $upload->upload();
         if (!$info) {// 上传错误提示错误信息
-            return $this->returnInfo(0,$upload->getError());
+            return $this->returnInfo(0, $upload->getError());
         } else {// 上传成功 获取上传文件信息
-            $this->returnInfo(1,'成功',$info);
+            return $this->returnInfo(1, '成功', $info);
 //            $url  = getFileUrl($info[$file_name]['savepath'] . $info[$file_name]['savename']);
 //            $data = array('success' => 1, 'url' => $url);
 //            echo json_encode($data, true);

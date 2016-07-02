@@ -27,6 +27,7 @@ class PrizeService extends CommonService {
         $data        = $prize_model->getList($params, $limit, $page);
         foreach ($data as $k => $v) {
             $data[$k]['create_time'] = date('Y-m-d H:i', $v['create_time']);
+            $data[$k]['p_image_uri'] = $v['p_image_uri'] ? '<img src="' . getFileUrl($v['p_image_uri']) . '" width="100"/>' : '';
         }
 
         return $data;
@@ -51,16 +52,17 @@ class PrizeService extends CommonService {
         if ($prize_info) {
             return $this->returnInfo(0, '奖品已经存在');
         }
-        $data        = array(
+        $data          = array(
             'p_name'        => $p_name,
             'p_inventory'   => $p_inventory,
             'create_uid'    => $uid,
             'create_time'   => NOW_TIME,
             'p_probability' => $p_probability
         );
-        $upload_data = $this->upload();
-        if ($upload_data) {
-            $data['p_image_uri'] = getFileUrl($upload_data['p_image_uri']['savepath'] . $upload_data['p_image_uri']['savename']);
+        $upload_result = $this->upload();
+        if ($upload_result['state']) {
+            $upload_data         = $upload_result['extra'];
+            $data['p_image_uri'] = $upload_data['p_image_uri']['savepath'] . $upload_data['p_image_uri']['savename'];
         }
         if ($item_id = $prizer_model->save($data)) {
 
@@ -88,17 +90,18 @@ class PrizeService extends CommonService {
             return $this->returnInfo(0, '奖品已经存在');
         }
 
-        $data        = array(
+        $data          = array(
             'p_name'      => $p_name,
-            'p_inventory' => (int)$p_probability,
+            'p_probability' => (int)$p_probability,
             'create_uid'  => $uid,
             'create_time' => NOW_TIME
         );
-        $upload_data = $this->upload();
-        if ($upload_data) {
-            $data['p_image_uri'] = getFileUrl($upload_data['p_image_uri']['savepath'] . $upload_data['p_image_uri']['savename']);
+        $upload_result = $this->upload();
+        if ($upload_result['state']) {
+            $upload_data         = $upload_result['extra'];
+            $data['p_image_uri'] = $upload_data['p_image_uri']['savepath'] . $upload_data['p_image_uri']['savename'];
         }
-        if ($prizer_model->updateById($p_id, $data)) {
+        if ($prizer_model->updateById($p_id, $data) !== false) {
             $prizer_model->increaseInventory($p_id, $p_inventory);
 
             return $this->returnInfo(1, '奖品编辑成功');

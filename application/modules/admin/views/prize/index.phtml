@@ -14,7 +14,7 @@
                         <i class="ace-icon fa fa-pencil bigger-110"></i>
                         <span class="bigger-110 no-text-shadow">编辑</span>
                     </button>
-                    <button class="btn btn-xs   btn-danger" id="delForm" data-pk="item_id" data-action="<?php echo base_url('admin/prize/del'); ?>">
+                    <button class="btn btn-xs   btn-danger" id="delForm" data-pk="p_id" data-action="<?php echo base_url('admin/prize/del'); ?>">
                         <i class="ace-icon glyphicon glyphicon-trash bigger-110"></i>
                         <span class="bigger-110 no-text-shadow">删除</span>
                     </button>
@@ -67,7 +67,7 @@
                                 <label class="col-sm-3 control-label no-padding-right" for="show_index"> 奖品库存叠加值</label>
 
                                 <div class="col-sm-6">
-                                    <label class="col-sm-3 control-label no-padding-right"><%=data.info.p_inventory%></label>
+                                    <label><%=data.info.p_inventory%></label>
                                     <input type="text" name="p_inventory" placeholder="奖品库存叠加值(正数为加，负数为减)" class="col-xs-12"/>
                                 </div>
                             </div>
@@ -77,7 +77,7 @@
                                 <div class="col-sm-6">
                                     <input type="file" id="p_image_uri" name="p_image_uri" placeholder="奖品库存叠加值(正数为加，负数为减)" class="col-xs-12"/>
                                     <%if(data.info.p_image_uri){%>
-                                    <img src="<%=data.info.p_image_uri%>" width="100">
+                                    <img src="<?php echo getFileUrl('<%=data.info.p_image_uri%>');?>" width="100">
                                     <%}%>
                                 </div>
                             </div>
@@ -118,8 +118,8 @@
             }
         };
         if (typeof (dataInfoUrl) != 'undefined' && dataInfoUrl != '') {
-            var item_id = $($(yboard.config.tableId)).getListIds('p_id', true);
-            if (!item_id) {
+            var p_id = $($(yboard.config.tableId)).getListIds('p_id', true);
+            if (!p_id) {
                 return false;
             }
             $.get(dataInfoUrl, {p_id: p_id}, function (data) {
@@ -127,11 +127,11 @@
                     formData = {
                         action: dataAction,
                         info: {
-                            p_id: data.info.p_id,
-                            p_name: data.info.p_name,
-                            p_inventory: data.info.p_inventory,
-                            p_image_uri: data.info.p_image_uri,
-                            p_probability: data.info.p_probability
+                            p_id: data.data.p_id,
+                            p_name: data.data.p_name,
+                            p_inventory: data.data.p_inventory,
+                            p_image_uri: data.data.p_image_uri,
+                            p_probability: data.data.p_probability
                         }
                     };
                     callBack(formData);

@@ -58,10 +58,10 @@ class PrizeModel extends CommonModel {
         if ((int)$p_inventory > 0) {
             $update_data['p_inventory[+]'] = abs($p_inventory);
         } else {
-            $update_data['p_inventory[+]'] = abs($p_inventory);
+            $update_data['p_inventory[-]'] = abs($p_inventory);
         }
 
-        return $this->update($this->_table, $update_data, ['p_id' => $p_id]);
+        return $this->update($this->_table, $update_data, ['p_id' => (int)$p_id]);
     }
 
 }

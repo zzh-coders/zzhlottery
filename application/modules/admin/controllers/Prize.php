@@ -66,7 +66,7 @@ class PrizeController extends AdminController {
     public function getPrizeByIdAction() {
         $p_id          = $this->get('p_id');
         $prize_service = $this->loadService('Prize');
-        $info          = $prize_service->getItemById($p_id);
+        $info          = $prize_service->getPrizeById($p_id);
         $this->success($info);
     }
 

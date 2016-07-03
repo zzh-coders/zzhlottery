@@ -1,0 +1,40 @@
+<?php Yaf\loader::import(__HEADER__); ?>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-12">
+                <table id="table"
+                       class="table table-striped table-bordered table-hover"
+                       data-click-to-select="true"
+                       data-page-size="<?php echo $limit; ?>"
+                       data-toggle="table"
+                       data-url="<?php echo base_url('admin/chance/getList'); ?>"
+                       data-side-pagination="server"
+                       data-pagination="true"
+                       data-page-list="[<?php echo $limit; ?>]"
+                >
+                    <thead>
+                    <tr>
+                        <th data-checkbox="true" data-class="center"></th>
+                        <th data-field="username">用户名</th>
+                        <th data-field="c_num">机会数</th>
+                        <th data-field="update_date">机会日期</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div><!-- /.span-->
+        </div><!-- /.row -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+
+<?php Yaf\loader::import(__FOOTER__); ?>
+
+<script>
+    $.hight_nav('<?php echo base_url('admin/chance/index');?>');
+    $(function (e) {
+        yboard.init();
+    });
+</script>
+</body>
+</html>

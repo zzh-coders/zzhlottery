@@ -87,7 +87,7 @@
 
                         <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                             <li>
-                                <a id="loginOut" href="javascript:;" data-url="<?php echo base_url('public/loginout'); ?>">
+                                <a id="loginOut" href="javascript:;" data-url="<?php echo base_url('admin/public/loginout'); ?>">
                                     <i class="ce-icon fa fa-power-off"></i>
                                     退出
                                 </a>
@@ -96,12 +96,12 @@
                     </li>
                 <?php } else { ?>
                     <li class="green">
-                        <a href="<?php echo base_url('Public/login'); ?>" class="dropdown-toggle">
+                        <a href="<?php echo base_url('admin/Public/login'); ?>" class="dropdown-toggle">
                             登录
                         </a>
                     </li>
                     <li class="grey">
-                        <a href="<?php echo base_url('Public/register'); ?>" class="dropdown-toggle">
+                        <a href="<?php echo base_url('admin/Public/register'); ?>" class="dropdown-toggle">
                             注册
                         </a>
                     </li>
@@ -118,106 +118,106 @@
         } catch (e) {
         }
     </script>
-        <div id="sidebar" class="sidebar                  responsive">
-            <script type="text/javascript">
-                try {
-                    ace.settings.check('sidebar', 'fixed')
-                } catch (e) {
-                }
-            </script>
+    <div id="sidebar" class="sidebar                  responsive">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('sidebar', 'fixed')
+            } catch (e) {
+            }
+        </script>
 
-            <ul class="nav nav-list">
-                <li>
-                    <a href="<?php echo base_url('admin/index/index');?>">
-                        <i class="menu-icon fa fa-tachometer"></i>
-                        <span class="menu-text"> 首页管理 </span>
-                    </a>
+        <ul class="nav nav-list">
+            <li>
+                <a href="<?php echo base_url('admin/index/index'); ?>">
+                    <i class="menu-icon fa fa-tachometer"></i>
+                    <span class="menu-text"> 首页管理 </span>
+                </a>
 
-                    <b class="arrow"></b>
-                </li>
-                <li>
-                    <a href="<?php echo base_url('admin/member/index');?>">
-                        <i class="menu-icon fa fa-user"></i>
-                        <span class="menu-text"> 用户管理 </span>
-                    </a>
+                <b class="arrow"></b>
+            </li>
+            <li>
+                <a href="<?php echo base_url('admin/member/index'); ?>">
+                    <i class="menu-icon fa fa-user"></i>
+                    <span class="menu-text"> 用户管理 </span>
+                </a>
 
-                    <b class="arrow"></b>
-                </li>
-                <li>
-                    <a href="<?php echo base_url('admin/prize/index');?>">
-                        <i class="menu-icon fa fa-gift"></i>
-                        <span class="menu-text"> 奖品管理 </span>
-                    </a>
+                <b class="arrow"></b>
+            </li>
+            <li>
+                <a href="<?php echo base_url('admin/prize/index'); ?>">
+                    <i class="menu-icon fa fa-gift"></i>
+                    <span class="menu-text"> 奖品管理 </span>
+                </a>
 
-                    <b class="arrow"></b>
-                </li>
-                <li>
-                    <a href="<?php echo base_url('admin/winning/index');?>">
-                        <i class="menu-icon fa fa-star"></i>
-                        <span class="menu-text"> 中奖管理  </span>
-                    </a>
+                <b class="arrow"></b>
+            </li>
+            <li>
+                <a href="<?php echo base_url('admin/winning/index'); ?>">
+                    <i class="menu-icon fa fa-star"></i>
+                    <span class="menu-text"> 中奖管理  </span>
+                </a>
 
-                    <b class="arrow"></b>
-                </li>
-                <li>
-                    <a href="<?php echo base_url('admin/chance/index');?>">
-                        <i class="menu-icon fa fa-smile-o"></i>
-                        <span class="menu-text"> 抽奖机会  </span>
-                    </a>
+                <b class="arrow"></b>
+            </li>
+            <li>
+                <a href="<?php echo base_url('admin/chance/index'); ?>">
+                    <i class="menu-icon fa fa-smile-o"></i>
+                    <span class="menu-text"> 抽奖机会  </span>
+                </a>
 
-                    <b class="arrow"></b>
-                </li>
-                <li class="">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <i class="menu-icon fa fa-users"></i>
-                        <span class="menu-text"> 管理员管理 </span>
+                <b class="arrow"></b>
+            </li>
+            <li class="">
+                <a href="javascript:;" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-users"></i>
+                    <span class="menu-text"> 管理员管理 </span>
 
-                        <b class="arrow fa fa-angle-down"></b>
-                    </a>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
 
-                    <b class="arrow"></b>
+                <b class="arrow"></b>
 
-                    <ul class="submenu">
-                        <li class="">
-                            <a href="<?php echo base_url('admin/admins/index');?>">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                管理员管理
-                            </a>
+                <ul class="submenu">
+                    <li class="">
+                        <a href="<?php echo base_url('admin/admins/index'); ?>">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            管理员管理
+                        </a>
 
-                            <b class="arrow"></b>
-                        </li>
+                        <b class="arrow"></b>
+                    </li>
 
-                        <li class="">
-                            <a href="<?php echo base_url('admin/admins/adminlog');?>">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                管理员日志
-                            </a>
+                    <li class="">
+                        <a href="<?php echo base_url('admin/admins/adminlog'); ?>">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            管理员日志
+                        </a>
 
-                            <b class="arrow"></b>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="<?php echo base_url('admin/setting/index');?>">
-                        <i class="menu-icon fa fa-cog"></i>
-                        <span class="menu-text"> 设置 </span>
-                    </a>
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="<?php echo base_url('admin/setting/index'); ?>">
+                    <i class="menu-icon fa fa-cog"></i>
+                    <span class="menu-text"> 设置 </span>
+                </a>
 
-                    <b class="arrow"></b>
-                </li>
-            </ul><!-- /.nav-list -->
+                <b class="arrow"></b>
+            </li>
+        </ul><!-- /.nav-list -->
 
-            <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
-                <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
-            </div>
-
-            <script type="text/javascript">
-                try {
-                    ace.settings.check('sidebar', 'collapsed')
-                } catch (e) {
-                }
-            </script>
+        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+            <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
         </div>
+
+        <script type="text/javascript">
+            try {
+                ace.settings.check('sidebar', 'collapsed')
+            } catch (e) {
+            }
+        </script>
+    </div>
     <div class="main-content">
         <div class="main-content-inner">
             <div class="breadcrumbs" id="breadcrumbs">

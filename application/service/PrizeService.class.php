@@ -22,12 +22,16 @@ class PrizeService extends CommonService {
     }
 
     public function getList($params, $limit = 0, $page = 20) {
-        $params      = $this->parseParams($params);
-        $prize_model = $this->loadModel('Prize');
-        $data        = $prize_model->getList($params, $limit, $page);
+        $params       = $this->parseParams($params);
+        $prize_model  = $this->loadModel('Prize');
+        $data         = $prize_model->getList($params, $limit, $page);
+        $uid_array    = array_column($data, 'create_uid');
+        $admin_model  = $this->loadModel('Admin');
+        $admin_member = $admin_model->getByIds($uid_array, '*', 'a_uid');
         foreach ($data as $k => $v) {
             $data[$k]['create_time'] = date('Y-m-d H:i', $v['create_time']);
             $data[$k]['p_image_uri'] = $v['p_image_uri'] ? '<img src="' . getFileUrl($v['p_image_uri']) . '" width="100"/>' : '';
+            $data[$k]['username']    = isset($admin_member[$v['create_uid']]) ? $admin_member[$v['create_uid']]['a_account'] : '';
         }
 
         return $data;
@@ -91,10 +95,10 @@ class PrizeService extends CommonService {
         }
 
         $data          = array(
-            'p_name'      => $p_name,
+            'p_name'        => $p_name,
             'p_probability' => (int)$p_probability,
-            'create_uid'  => $uid,
-            'create_time' => NOW_TIME
+            'create_uid'    => $uid,
+            'create_time'   => NOW_TIME
         );
         $upload_result = $this->upload();
         if ($upload_result['state']) {

@@ -15,11 +15,11 @@ namespace Yboard;
 class AdminModel extends CommonModel {
     public function __construct($options = null) {
         $this->_table = 'lty_admin';
-        $this->_pk    = 'uid';
+        $this->_pk    = 'a_uid';
         parent::__construct($options);
     }
 
-    public function fetch_by_username($username) {
+    public function getAdminByUsername($username) {
         if (empty($username)) {
             return null;
         }

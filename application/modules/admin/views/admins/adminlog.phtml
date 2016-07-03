@@ -1,0 +1,48 @@
+<?php Yaf\loader::import(__HEADER__); ?>
+
+<div class="row">
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <!--        <div class="row">-->
+        <!--            <div class="col-xs-12">-->
+        <!--                -->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--        <div class="hr hr-10 dotted"></div>-->
+
+        <div class="row">
+            <div class="col-xs-12">
+                <table id="table"
+                       class="table table-striped table-bordered table-hover"
+                       data-click-to-select="true"
+                       data-page-size="<?php echo $limit; ?>"
+                       data-toggle="table"
+                       data-url="<?php echo base_url('admin/admins/getAdminLogList'); ?>"
+                       data-side-pagination="server"
+                       data-pagination="true"
+                       data-page-list="[<?php echo $limit; ?>]"
+                >
+                    <thead>
+                    <tr>
+                        <th data-checkbox="true" data-class="center"></th>
+                        <th data-field="username">用户名称</th>
+                        <th data-field="al_content">操作内容</th>
+                        <th data-field="create_time">添加时间</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div><!-- /.span-->
+        </div><!-- /.row -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+
+<?php Yaf\loader::import(__FOOTER__); ?>
+
+<script>
+    $.hight_nav('<?php echo base_url('admin/admins/index');?>');
+    $(function (e) {
+        yboard.init();
+    });
+</script>
+</body>
+</html>

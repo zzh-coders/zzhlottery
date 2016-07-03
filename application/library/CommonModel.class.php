@@ -41,6 +41,28 @@ class CommonModel extends Model {
         return $this->get($this->_table, $column, [$this->_pk => $id]);
     }
 
+    public function getByIds($ids, $column = '*', $key = '') {
+        if (!$ids) {
+            return [];
+        }
+
+        $data        = $this->select($this->_table, $column, [$this->_pk => $ids]);
+        $result_data = [];
+        if ($data && $key) {
+            foreach ($data as $k => $item) {
+                if (!key_exists($key, $item)) {
+                    return $data;
+                }
+                $result_data[$item[$key]] = $item;
+                unset($data[$k]);
+            }
+        } else {
+            return $data;
+        }
+
+        return $result_data;
+    }
+
     public function countByParams($params, $column = '*') {
 
         return $this->count($this->_table, $column, $params);

@@ -11,71 +11,108 @@
 namespace Yboard;
 
 class MemberService extends CommonService {
-    public function register($username, $password, $confirm_pass, $code) {
-        \Yaf\Loader::import('Verify.class.php');
-        $verify = new \Yboard\Verify();
-        if (!$verify->check($code, 1)) {
-            return $this->returnInfo(0, '验证码输入错误');
-        }
-        if ($confirm_pass != $password) {
-            return $this->returnInfo(0, '确认密码不正确');
-        }
-        if (empty($username)) {
-            return $this->returnInfo(0, '用户不能为空');
-        }
-        if (empty($password)) {
-            return $this->returnInfo(0, '密码不能为空');
-        }
-        $member_model = $this->loadModel('member');
+    public function count($params = null) {
+        $params       = $this->parseParams($params);
+        $member_model = $this->loadModel('Member');
 
-        $member = $member_model->fetch_by_username($username);
-        if (!$member) {
-            $member        = [
-                'username'    => $username,
-                'password'    => md5(substr($username, -5) . $password),
-                'create_time' => NOW_TIME
-            ];
-            $uid           = $member_model->save($member);
-            $member['uid'] = $uid;
-        } else {
+        return $member_model->countByParams($params);
+    }
+
+    public function getList($params, $limit = 0, $page = 20) {
+        $params       = $this->parseParams($params);
+        $member_model = $this->loadModel('Member');
+        $data         = $member_model->getList($params, $limit, $page);
+
+        foreach ($data as $k => $v) {
+            $data[$k]['create_time'] = date('Y-m-d H:i', $v['create_time']);
+        }
+
+        return $data;
+    }
+
+    public function add($m_phone, $m_username, $m_email, $m_ip) {
+        if (!$m_phone) {
+            return $this->returnInfo(0, '用户帐号为空');
+        }
+        if (!$m_username) {
+            return $this->returnInfo(0, '用户名为空');
+        }
+        if (!$m_email) {
+            return $this->returnInfo(0, '邮箱为空');
+        }
+        $member_model = $this->loadModel('Member');
+        $member_info  = $member_model->getMemberByUsername($m_username);
+        if ($member_info) {
             return $this->returnInfo(0, '用户已经存在');
         }
+        $data = array(
+            'm_phone'     => $m_phone,
+            'm_username'  => $m_username,
+            'm_email'     => $m_email,
+            'm_ip'        => $m_ip,
+            'm_state'     => 1,
+            'create_time' => NOW_TIME,
+            'm_password'  => md5('lottery.yboard.cn' . '123456'),
+            'm_openid'    => ''
+        );
+        if ($item_id = $member_model->save($data)) {
+            return $this->returnInfo(1, '用户添加成功');
+        }
 
-        setSession('userinfo', $member);
-
-        return $this->returnInfo(1, '注册成功');
+        return $this->returnInfo();
     }
 
-    public function login($username, $password) {
-        if (empty($username)) {
-            return $this->returnInfo(0, '用户不能为空');
+    public function edit($m_uid, $m_phone, $m_username, $m_email, $m_ip) {
+        if (!$m_uid) {
+            return $this->returnInfo(0, '用户id为空');
         }
-        if (empty($password)) {
-            return $this->returnInfo(0, '密码不能为空');
+        if (!$m_phone) {
+            return $this->returnInfo(0, '用户帐号为空');
         }
-        $member_model = $this->loadModel('member');
+        if (!$m_username) {
+            return $this->returnInfo(0, '用户名为空');
+        }
+        if (!$m_email) {
+            return $this->returnInfo(0, '邮箱为空');
+        }
+        $member_model = $this->loadModel('Member');
+        $member_info  = $member_model->getMemberByUsername($m_username);
+        if ($member_info && $member_info['m_uid'] != $m_uid) {
+            return $this->returnInfo(0, '用户已经存在');
+        }
+        $data = array(
+            'm_phone'    => $m_phone,
+            'm_username' => $m_username,
+            'm_email'    => $m_email,
+            'm_ip'       => $m_ip
+        );
 
-        $member = $member_model->fetch_by_username($username);
-        if (!$member) {
-            return $this->returnInfo(0, '用户不存在');
-        }
-        if (!$member['state']) {
-            return $this->returnInfo(0, '用户禁用');
-        }
-        if ($member['password'] != md5(substr($username, -5) . $password)) {
-            return $this->returnInfo(0, '用户密码不正确');
-        }
-        setSession('userinfo', $member);
+        if ($member_model->updateById($m_uid, $data) !== false) {
 
-        return $this->returnInfo(1, '登录成功');
+            return $this->returnInfo(1, '用户编辑成功');
+        }
+
+        return $this->returnInfo();
     }
 
-    public function getInfoById($userId) {
-        if (!$userId) {
-            return [];
+
+    public function del($ids) {
+        if (!$ids) {
+            return $this->returnInfo(0, '请选择用户id');
         }
+        $member_model = $this->loadModel('Member');
+
+        if ($member_model->deleteByIds($ids) !== false) {
+            return $this->returnInfo(1, '用户删除成功');
+        }
+
+        return $this->returnInfo();
+    }
+
+    public function getMemberById($userId) {
         $member_model = $this->loadModel('Member');
 
         return $member_model->getById($userId);
     }
+
 }

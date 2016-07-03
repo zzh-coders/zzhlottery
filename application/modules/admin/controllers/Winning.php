@@ -19,4 +19,21 @@ class WinningController extends AdminController {
 
         return false;
     }
+
+    public function getListAction() {
+        $offset = $this->get('offset');
+        $limit  = $this->get('limit');
+        $params = $this->get('search');
+        if ($params) {
+            $params = json_decode($params, true);
+        }
+
+        $winning_service = $this->loadService('Winning');
+        $count           = $winning_service->count($params);
+
+        $offset = $this->offset_format($count, $limit, $offset);
+
+        $list = $winning_service->getlist($params, $limit, $offset * $limit);
+        $this->ajaxRows($list, $count);
+    }
 }

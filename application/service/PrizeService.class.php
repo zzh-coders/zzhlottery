@@ -133,4 +133,10 @@ class PrizeService extends CommonService {
 
         return $prize_model->getById($p_id);
     }
+
+    public function getPrizeList() {
+        $prize_model = $this->loadModel('Prize');
+
+        return $prize_model->getAllPrize();
+    }
 }

@@ -12,12 +12,11 @@
 class RouterPlugin extends Yaf\Plugin_Abstract {
 
     public function routerStartup(Yaf\Request_Abstract $request, Yaf\Response_Abstract $response) {
-       
+
     }
 
-    // 去掉 Module 后的 index
     public function routerShutdown(Yaf\Request_Abstract $request, Yaf\Response_Abstract $response) {
-        
+
     }
 
 }

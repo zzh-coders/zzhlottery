@@ -61,6 +61,7 @@ class Bootstrap extends Yaf\Bootstrap_Abstract {
 //        $route = new Yaf\Route\Rewrite('shares/:page_id/:item_id', ['module' => 'Index', 'controller' => 'Page', 'action' => 'share']);
 //        //使用路由器装载路由协议
 //        $router->addRoute('share', $route);
+        
     }
 
     public function _initView(Yaf\Dispatcher $dispatcher) {
@@ -68,8 +69,12 @@ class Bootstrap extends Yaf\Bootstrap_Abstract {
     }
 
     public function _initAutoloader(Yaf\Dispatcher $dispatcher) {
+
         Yaf\Loader::import(APP_PATH . "/conf/constants.php");
         Yaf\Loader::import(FUNC_PATH . '/functions.php');
-        Yaf\Loader::import('AdminController.class.php');
+        Yaf\Loader::import('CommonController.class.php');
+        var_dump($dispatcher->getRequest());
+        Yaf\Loader::import(MODULES_PATH . '/Admin/controllers/Admin.php');
+        Yaf\Loader::import(MODULES_PATH . '/Api/controllers/Api.php');
     }
 }

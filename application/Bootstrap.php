@@ -73,7 +73,6 @@ class Bootstrap extends Yaf\Bootstrap_Abstract {
         Yaf\Loader::import(APP_PATH . "/conf/constants.php");
         Yaf\Loader::import(FUNC_PATH . '/functions.php');
         Yaf\Loader::import('CommonController.class.php');
-        var_dump($dispatcher->getRequest());
         Yaf\Loader::import(MODULES_PATH . '/Admin/controllers/Admin.php');
         Yaf\Loader::import(MODULES_PATH . '/Api/controllers/Api.php');
     }

@@ -14,7 +14,7 @@ namespace Yboard;
 
 class AdminService extends CommonService {
     public function register($username, $password, $confirm_pass, $code) {
-        \Yaf\Loader::import('Verify.class.php');
+        loadFile('Verify.class.php');
         $verify = new \Yboard\Verify();
         if (!$verify->check($code, 1)) {
             return $this->returnInfo(0, '验证码输入错误');

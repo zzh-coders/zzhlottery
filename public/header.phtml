@@ -63,7 +63,7 @@
         </button>
 
         <div class="navbar-header pull-left">
-            <a href="/Index/index" class="navbar-brand">
+            <a href="<?php echo base_url('admin/Index/index'); ?>" class="navbar-brand">
                 <small>
                     <i class="fa fa-leaf"></i>
                     lottery.yboard.cn
@@ -73,13 +73,17 @@
 
         <div class="navbar-buttons navbar-header pull-right" role="navigation">
             <ul class="nav ace-nav">
-                <?php if ($userinfo) { ?>
+                <?php
+                if (!isset($userinfo) || !$userinfo) {
+                    $userinfo = getSession('userinfo');// 这里多进行几次的loadFile之后会出现传值有问题
+                }
+                if (isset($userinfo) && $userinfo) { ?>
                     <li class="light-blue">
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                             <img class="nav-user-photo" src="<?php echo __ASSETS__; ?>/avatars/user.jpg" alt="<?php echo $userinfo['a_account']; ?>"/>
-                                    <span class="user-info">
+                            <span class="user-info">
                                         <small>欢迎光临,</small>
-                                        <?php echo $userinfo['a_account']; ?>
+                                <?php echo $userinfo['a_account']; ?>
                                     </span>
 
                             <i class="ace-icon fa fa-caret-down"></i>

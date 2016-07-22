@@ -47,9 +47,9 @@ class Upload {
 
         spl_autoload_register(function ($class) {
             if ($class) {
-                $file = str_replace(['\\','Yboard/'], ['/',''], $class);
+                $file = str_replace(['\\', 'Yboard/'], ['/', ''], $class);
                 $file .= '.class.php';
-                \Yaf\Loader::import($file);
+                loadFile(LIB_PATH . '/' . $file);
             }
         });
 
@@ -188,15 +188,16 @@ class Upload {
                 $file['md5']  = md5_file($file['tmp_name']);
                 $file['sha1'] = sha1_file($file['tmp_name']);
             }
-
-            /* 调用回调函数检测文件是否存在 */
-            $data = call_user_func($this->callback, $file);
-            if ($this->callback && $data) {
-                if (file_exists('.' . $data['path'])) {
-                    $info[$key] = $data;
-                    continue;
-                } elseif ($this->removeTrash) {
-                    call_user_func($this->removeTrash, $data); //删除垃圾据
+            if ($this->callback) {
+                /* 调用回调函数检测文件是否存在 */
+                $data = call_user_func($this->callback, $file);
+                if ($this->callback && $data) {
+                    if (file_exists('.' . $data['path'])) {
+                        $info[$key] = $data;
+                        continue;
+                    } elseif ($this->removeTrash) {
+                        call_user_func($this->removeTrash, $data); //删除垃圾据
+                    }
                 }
             }
 

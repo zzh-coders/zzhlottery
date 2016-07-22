@@ -38,7 +38,7 @@ class Log {
             if ($class) {
                 $file = str_replace(['\\', 'Yboard/'], ['/', ''], $class);
                 $file .= '.class.php';
-                \Yaf\Loader::import($file);
+                loadFile(LIB_PATH.'/'.$file);
             }
         });
         $type  = isset($config['type']) ? $config['type'] : 'File';

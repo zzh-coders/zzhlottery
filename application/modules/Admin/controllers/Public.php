@@ -35,7 +35,7 @@ class PublicController extends AdminController {
 
     public function verifyAction() {
         ob_clean();
-        Yaf\Loader::import('Verify.class.php');
+        loadFile('Verify.class.php');
         $verify = new \Yboard\Verify([
             'imageW' => 290
         ]);

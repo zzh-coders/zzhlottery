@@ -45,18 +45,14 @@ class CommonController extends Yaf\Controller_Abstract {
     }
 
     public function loadService($service_name) {
-        Yaf\Loader::import('CommonService.class.php');
+        loadFile('CommonService.class.php');
         $service_name = ucfirst($service_name);
         static $services;
         if (isset($services[$service_name]) && $services[$service_name]) {
             return $services[$service_name];
         }
         $file = SERVICE_PATH . '/' . $service_name . 'Service.class.php';
-        if (PHP_OS == 'Linux') {
-            Yaf\Loader::import($file);
-        } else {
-            require_once $file;
-        }
+        loadFile($file);
         $class                   = "\\Yboard\\" . $service_name . 'Service';
         $service                 = new $class();
         $services[$service_name] = $service;

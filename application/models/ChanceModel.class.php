@@ -18,4 +18,21 @@ class ChanceModel extends CommonModel {
         $this->_pk    = 'c_id';
         parent::__construct($options);
     }
+
+    public function getUserChance($uid, $date) {
+        if (!$uid || !$date) {
+            return [];
+        }
+
+        return $this->get($this->_table, '*', ['c_uid' => $uid, 'update_date' => $date]);
+
+    }
+
+    public function getUserInfo($uid) {
+        if (!$uid) {
+            return [];
+        }
+
+        return $this->get($this->_table, '*', ['c_uid' => $uid]);
+    }
 }

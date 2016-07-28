@@ -437,7 +437,7 @@ function debug($arr) {
 function memory() {
     $cache = Yaf\Registry::get('Redis');
     if (!$cache) {
-        Yaf\Loader::import(LIB_PATH . ' / Redis .class.php');
+        loadFile('Redis .class.php');
         $cache = new \Yboard\Redis();
         Yaf\Registry::set('Redis', $cache);
     }
@@ -678,9 +678,31 @@ function getFileUrl($file_path) {
 }
 
 function writeLog($message, $level) {
-    \Yaf\Loader::import('Log.class.php');
+    loadFile('Log.class.php');
     \Yboard\Log::init();
     \Yboard\Log::record($message, $level);
     \Yboard\Log::save();
 
+}
+
+/**
+ * 文件加载
+ * @param $file
+ */
+function loadFile($files) {
+    if (is_array($files) && !empty($files)) {
+        foreach ($files as $file) {
+            loadFile($file);
+        }
+    } else {
+        if (strtolower(PHP_OS) == 'linux') {
+            \Yaf\Loader::import($files);
+        } else {
+            if ((strpos($files, '/') > -1)) {
+                require_once $files;
+            } else {
+                require_once LIB_PATH . '/' . $files;
+            }
+        }
+    }
 }

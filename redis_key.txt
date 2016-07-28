@@ -1,21 +1,21 @@
-redisÇ°×º£º'lty:'
+redisÇ°×ºï¿½ï¿½'lty:'
 
-½±Æ·»º´ækey£ºlty:prize:{p_id}
-ÄÚÈÝ£ºp_id¡¢p_name¡¢create_uid¡¢p_image_uri¡¢p_probability¡¢p_actual_probability¡¢create_time
+ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½keyï¿½ï¿½lty:prize:{p_id}
+ï¿½ï¿½ï¿½Ý£ï¿½p_idï¿½ï¿½p_nameï¿½ï¿½create_uidï¿½ï¿½p_image_uriï¿½ï¿½p_probabilityï¿½ï¿½p_actual_probabilityï¿½ï¿½create_time
 
-½±Æ·µÄ¿â´æ»º´ækey£ºlty:prize:inventory:{p_id}
-ÄÚÈÝ£ºp_inventory
+ï¿½ï¿½Æ·ï¿½Ä¿ï¿½æ»ºï¿½ï¿½keyï¿½ï¿½lty:prize:inventory:{p_id}
+ï¿½ï¿½ï¿½Ý£ï¿½p_inventory
 
-ÓÃ»§µÄ³é½±»ú»á»º´ækey£ºlty:chance:{uid}:{today}
-ÄÚÈÝ£ºc_num
+ï¿½Ã»ï¿½ï¿½Ä³é½±ï¿½ï¿½ï¿½á»ºï¿½ï¿½keyï¿½ï¿½lty:chance:{uid}:{today}
+ï¿½ï¿½ï¿½Ý£ï¿½c_num
 
-ÓÃ»§ÊÇ·ñ»ñÈ¡»ú»á»º´ækey£ºlty:ischance:{uid}:{today}
-ÄÚÈÝ£º1 OR 0
+ï¿½Ã»ï¿½ï¿½Ç·ï¿½ï¿½È¡ï¿½ï¿½ï¿½á»ºï¿½ï¿½keyï¿½ï¿½lty:ischance:{uid}:{today}
+ï¿½ï¿½ï¿½Ý£ï¿½1 OR 0
 
 
-ÓÃ»§µÄÐÅÏ¢»º´ækey£ºlty:userinfo:{uid}
-ÄÚÈÝ£ºm_uid¡¢m_phone¡¢m_password¡¢m_openid¡¢m_username¡¢m_email¡¢m_ip¡¢m_state¡¢create_time
+ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½keyï¿½ï¿½lty:userinfo:{uid}
+ï¿½ï¿½ï¿½Ý£ï¿½m_uidï¿½ï¿½m_phoneï¿½ï¿½m_passwordï¿½ï¿½m_openidï¿½ï¿½m_usernameï¿½ï¿½m_emailï¿½ï¿½m_ipï¿½ï¿½m_stateï¿½ï¿½create_time
 
-ÓÃ»§ÊÇ·ñÖÐ½±»º´ækey£ºlty:iswinning:{uid}:{today}
-ÄÚÈÝ£º1 OR 0
+ï¿½Ã»ï¿½ï¿½Ç·ï¿½ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½keyï¿½ï¿½lty:iswinning:{uid}:{today}
+ï¿½ï¿½ï¿½Ý£ï¿½1 OR 0
 

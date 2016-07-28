@@ -64,4 +64,9 @@ class PrizeModel extends CommonModel {
         return $this->update($this->_table, $update_data, ['p_id' => (int)$p_id]);
     }
 
+
+    public function getAllPrize() {
+        return $this->select($this->_table, '*', []);
+    }
+
 }

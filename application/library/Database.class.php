@@ -121,7 +121,7 @@ class Database {
      * @return boolean        false - 备份失败
      */
     public function backup($table, $start) {
-        Yaf\Loader::import('Model.class.php');
+        loadFile('Model.class.php');
         //创建DB对象
         $db = new Model();
 
@@ -175,7 +175,7 @@ class Database {
 
     public function import($start) {
         //还原数据
-        Yaf\Loader::import('Model.class.php');
+        loadFile('Model.class.php');
         //创建DB对象
         $db = new Model();
 

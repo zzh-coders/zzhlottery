@@ -13,25 +13,39 @@ namespace Yboard;
 use Yaf\Exception;
 
 class CommonService {
+    public function upload() {
+        loadFile('Upload.class.php');
+        $upload            = new \Yboard\Upload();// 实例化上传类
+        $upload->maxSize   = 3145728;// 设置附件上传大小
+        $upload->allowExts = array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+        $upload->rootPath  = getConfig('upload_path');// 设置附件上传目录
+        $upload->savePath  = '';// 设置附件上传子目录
+        $info              = $upload->upload();
+        if (!$info) {// 上传错误提示错误信息
+            return $this->returnInfo(0, $upload->getError());
+        } else {// 上传成功 获取上传文件信息
+            return $this->returnInfo(1, '成功', $info);
+//            $url  = getFileUrl($info[$file_name]['savepath'] . $info[$file_name]['savename']);
+//            $data = array('success' => 1, 'url' => $url);
+//            echo json_encode($data, true);
+//            exit;
+        }
+    }
+
     protected function returnInfo($state = 0, $message = '系统错误', $extra = []) {
         return ['state' => $state, 'message' => $message, 'extra' => $extra];
     }
 
     protected function loadModel($table) {
         try {
-            \Yaf\Loader::import('Model.class.php');
-            \Yaf\Loader::import('CommonModel.class.php');
+            loadFile(['Model.class.php', 'CommonModel.class.php']);
             $table = ucfirst($table);
             static $models;
             if (isset($models[$table]) && $models[$table]) {
                 return $models[$table];
             }
             $file = MODEL_PATH . '/' . $table . 'Model.class.php';
-            if (PHP_OS == 'Linux') {
-                \Yaf\Loader::import($file);
-            } else {
-                require_once $file;
-            }
+            loadFile($file);
             $class          = "\\Yboard\\" . $table . 'Model';
             $model          = new $class();
             $models[$table] = $model;
@@ -54,25 +68,6 @@ class CommonService {
             });
         }
 
-        return $params;
-    }
-
-    public function upload() {
-        \Yaf\Loader::import('Upload.class.php');
-        $upload            = new \Yboard\Upload();// 实例化上传类
-        $upload->maxSize   = 3145728;// 设置附件上传大小
-        $upload->allowExts = array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
-        $upload->rootPath  = getConfig('upload_path');// 设置附件上传目录
-        $upload->savePath  = '';// 设置附件上传子目录
-        $info              = $upload->upload();
-        if (!$info) {// 上传错误提示错误信息
-            return $this->returnInfo(0, $upload->getError());
-        } else {// 上传成功 获取上传文件信息
-            return $this->returnInfo(1, '成功', $info);
-//            $url  = getFileUrl($info[$file_name]['savepath'] . $info[$file_name]['savename']);
-//            $data = array('success' => 1, 'url' => $url);
-//            echo json_encode($data, true);
-//            exit;
-        }
+        return $params ? $params : [];
     }
 }

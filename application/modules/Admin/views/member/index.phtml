@@ -1,4 +1,4 @@
-<?php Yaf\loader::import(__HEADER__); ?>
+<?php loadFile(__HEADER__); ?>
 
 <div class="row">
     <div class="col-xs-12">
@@ -6,15 +6,15 @@
         <div class="row">
             <div class="col-xs-12">
                 <div>
-                    <button class="btn btn-xs  btn-success" id="addForm" dialog-title="增加管理员" data-dialog="myDialog" data-action="<?php echo base_url('admin/admins/add'); ?>">
+                    <button class="btn btn-xs  btn-success" id="addForm" dialog-title="增加用户" data-dialog="myDialog" data-action="<?php echo base_url('admin/member/add'); ?>">
                         <i class="ace-icon fa  fa-plus bigger-110"></i>
                         <span class="bigger-110 no-text-shadow">新增</span>
                     </button>
-                    <button class="btn btn-xs   btn-warning" id="editForm" dialog-title="编辑管理员" data-pk="a_uid" data-dialog="myDialog" data-info-url="<?php echo base_url('admin/admins/getAdminById'); ?>" data-action="<?php echo base_url('admin/admins/edit'); ?>">
+                    <button class="btn btn-xs   btn-warning" id="editForm" dialog-title="编辑用户" data-pk="m_uid" data-dialog="myDialog" data-info-url="<?php echo base_url('admin/member/getMemberById'); ?>" data-action="<?php echo base_url('admin/member/edit'); ?>">
                         <i class="ace-icon fa fa-pencil bigger-110"></i>
                         <span class="bigger-110 no-text-shadow">编辑</span>
                     </button>
-                    <button class="btn btn-xs   btn-danger" id="delForm" data-pk="a_uid" data-action="<?php echo base_url('admin/admins/del'); ?>">
+                    <button class="btn btn-xs   btn-danger" id="delForm" data-pk="m_uid" data-action="<?php echo base_url('admin/member/del'); ?>">
                         <i class="ace-icon glyphicon glyphicon-trash bigger-110"></i>
                         <span class="bigger-110 no-text-shadow">删除</span>
                     </button>
@@ -30,7 +30,7 @@
                        data-click-to-select="true"
                        data-page-size="<?php echo $limit; ?>"
                        data-toggle="table"
-                       data-url="<?php echo base_url('admin/admins/getList'); ?>"
+                       data-url="<?php echo base_url('admin/member/getList'); ?>"
                        data-side-pagination="server"
                        data-pagination="true"
                        data-page-list="[<?php echo $limit; ?>]"
@@ -38,9 +38,11 @@
                     <thead>
                     <tr>
                         <th data-checkbox="true" data-class="center"></th>
-                        <th data-field="a_account">名称</th>
-                        <th data-field="a_password">密码</th>
+                        <th data-field="m_username">用户名</th>
+                        <th data-field="m_phone">电话号码</th>
+                        <th data-field="m_ip">来路ip</th>
                         <th data-field="create_time">添加时间</th>
+                        <th data-field="m_email"> 邮箱</th>
                     </tr>
                     </thead>
                 </table>
@@ -53,22 +55,29 @@
                     <form id="myForm" action="<%=data.action%>" method="post">
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="name"> 用户名</label>
+                                <label class="col-sm-3 control-label no-padding-right" for="m_username"> 用户名称</label>
 
                                 <div class="col-sm-6">
-                                    <input type="text" name="a_account" placeholder="用户名" class="col-xs-12" value="<%=data.info.a_account%>" required/>
+                                    <input type="text" name="m_username" placeholder="用户名称" class="col-xs-12" value="<%=data.info.m_username%>" required/>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="show_index"> 密码</label>
+                                <label class="col-sm-3 control-label no-padding-right" for="show_index"> 用户邮箱</label>
 
                                 <div class="col-sm-6">
-                                    <input type="text" name="a_password" placeholder="密码" class="col-xs-12"/>
+                                    <input type="text" name="m_email" placeholder="用户邮箱" class="col-xs-12" value="<%=data.info.m_email%>"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input type="hidden" value="<%=data.info.a_uid%>" name="a_uid">
+                                <label class="col-sm-3 control-label no-padding-right" for="m_phone"> 用户电话</label>
+
+                                <div class="col-sm-6">
+                                    <input type="text" id="m_phone" name="m_phone" placeholder="用户电话" class="col-xs-12" value="<%=data.info.m_phone%>"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" value="<%=data.info.m_uid%>" name="m_uid">
                             </div>
                         </div>
                     </form>
@@ -78,10 +87,10 @@
     </div><!-- /.col -->
 </div><!-- /.row -->
 
-<?php Yaf\loader::import(__FOOTER__); ?>
+<?php loadFile(__FOOTER__); ?>
 
 <script>
-    $.hight_nav('<?php echo base_url('admin/admins/index');?>');
+    $.hight_nav('<?php echo base_url('admin/member/index');?>');
     $(function (e) {
         yboard.init();
     });
@@ -89,22 +98,28 @@
         var dataAction = obj.attr('data-action'), dataInfoUrl = obj.attr('data-info-url'), formData = {
             action: dataAction,
             info: {
-                a_uid: '',
-                a_account: ''
+                m_uid: '',
+                m_username: '',
+                m_phone: '',
+                m_ip: '',
+                m_email: ''
             }
         };
         if (typeof (dataInfoUrl) != 'undefined' && dataInfoUrl != '') {
-            var a_uid = $($(yboard.config.tableId)).getListIds('a_uid', true);
-            if (!a_uid) {
+            var m_uid = $($(yboard.config.tableId)).getListIds('m_uid', true);
+            if (!m_uid) {
                 return false;
             }
-            $.get(dataInfoUrl, {a_uid: a_uid}, function (data) {
+            $.get(dataInfoUrl, {m_uid: m_uid}, function (data) {
                 if (data.code == 200) {
                     formData = {
                         action: dataAction,
                         info: {
-                            a_uid: data.data.a_uid,
-                            a_account: data.data.a_account
+                            m_uid: data.data.m_uid,
+                            m_username: data.data.m_username,
+                            m_phone: data.data.m_phone,
+                            m_ip: data.data.m_ip,
+                            m_email: data.data.m_email
                         }
                     };
                     callBack(formData);
@@ -113,9 +128,6 @@
         } else {
             callBack(formData);
         }
-    }
-    function dialogShow() {
-        return false;
     }
 </script>
 </body>

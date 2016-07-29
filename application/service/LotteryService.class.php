@@ -34,7 +34,25 @@ class LotteryService extends CommonService {
      * 抽奖操作
      */
     public function lottery($uid) {
+        $prize_array = $this->getLotteryPrize();
+    }
 
+    private function getLotteryPrize() {
+        $prize_lottery_array = [];
+        $prize_array         = $this->getPrize();
+        if ($prize_array) {
+            foreach ($prize_array as $prize) {
+                $prize_lottery_array[$prize['p_id']] = $prize['p_probability'];
+            }
+        }
+
+        return $prize_lottery_array;
+    }
+
+    public function getPrize() {
+        $prize_model = $this->loadModel('Prize');
+
+        return $prize_model->getAllPrize();
     }
 
     /**
@@ -112,9 +130,9 @@ class LotteryService extends CommonService {
      */
     public function incChance($uid, $date, $num) {
         if ($num == 0) {
-            return $this->returnInfo(0,'抽奖机会不能为0');
+            return $this->returnInfo(0, '抽奖机会不能为0');
         }
-        $num = abs($num);
+        $num          = abs($num);
         $chance_model = $this->loadModel('Chance');
         $chance_info  = $chance_model->getUserInfo($uid);
         if (!$chance_info) {
@@ -167,13 +185,13 @@ class LotteryService extends CommonService {
      */
     public function decChance($uid, $date, $num) {
         if ($num == 0) {
-            return $this->returnInfo(0,'抽奖机会不能为0');
+            return $this->returnInfo(0, '抽奖机会不能为0');
         }
-        $num = abs($num);
+        $num          = abs($num);
         $chance_model = $this->loadModel('Chance');
         $chance_info  = $chance_model->getUserInfo($uid);
         if (!$chance_info) {
-            return $this->returnInfo(0,'你今天没有抽奖机会');
+            return $this->returnInfo(0, '你今天没有抽奖机会');
         } else {
             if ($chance_info['update_date'] == $date) {
                 $update_data = [
@@ -204,23 +222,5 @@ class LotteryService extends CommonService {
 
         return $ret;
 
-    }
-
-    private function getLotteryPrize() {
-        $prize_lottery_array = [];
-        $prize_array         = $this->getPrize();
-        if ($prize_array) {
-            foreach ($prize_array as $prize) {
-                $prize_lottery_array[$prize['p_id']] = $prize['p_probability'];
-            }
-        }
-
-        return $prize_lottery_array;
-    }
-
-    public function getPrize() {
-        $prize_model = $this->loadModel('Prize');
-
-        return $prize_model->getAllPrize();
     }
 }

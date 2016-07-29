@@ -24,7 +24,7 @@ class ChanceModel extends CommonModel {
             return [];
         }
 
-        return $this->get($this->_table, '*', ['c_uid' => $uid, 'update_date' => $date]);
+        return $this->get($this->_table, '*', ['and' => ['c_uid' => $uid, 'update_date' => $date]]);
 
     }
 

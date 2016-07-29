@@ -70,6 +70,15 @@ model层用开源框架medoo
 
 前端框架 react.js(学习阶段)
 
+
+[接口暴露]
+
+登录接口：http://lottery.yboard.cn/index/login
+
+初始化接口：http://lottery.yboard.cn/index/initlottery
+
+抽奖接口：http://lottery.yboard.cn/index/lottery
+
 邮箱：
 
 532207815@qq.com

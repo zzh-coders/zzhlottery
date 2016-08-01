@@ -1,0 +1,63 @@
+<?php \Yaf\Loader::import(__HEADER__); ?>
+
+<div class="row">
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <div class="row">
+            <div class="col-xs-12">
+                <form id="myForm" action="<?php echo base_url('admin/setting/set'); ?>" method="post">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="init_chance"> 用户抽奖次数初始值</label>
+
+                            <div class="col-sm-6">
+                                <input type="text" name="init_chance" id="init_chance" placeholder="用户抽奖次数初始值" class="col-xs-12" value="<?php echo (isset($setting['init_chance'])) ? intval($setting['init_chance']) : ''; ?>"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="not_win_pid"> 谢谢参与的奖品ID</label>
+
+                            <div class="col-sm-6">
+                                <input type="text" name="not_win_pid" id="not_win_pid" placeholder="谢谢参与的奖品ID" class="col-xs-12" value="<?php echo (isset($setting['not_win_pid'])) ? intval($setting['not_win_pid']) : ''; ?>"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="again_win_pid"> 再来一次的奖品ID</label>
+
+                            <div class="col-sm-6">
+                                <input type="text" name="again_win_pid" id="again_win_pid" placeholder="谢谢参与的奖品ID" class="col-xs-12" value="<?php echo (isset($setting['again_win_pid'])) ? intval($setting['again_win_pid']) : ''; ?>"/>
+                            </div>
+                        </div>
+                        <div class="space-4"></div>
+                        <div class="clearfix form-actions">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button class="btn btn-info" type="submit">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    提交
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button class="btn" type="reset">
+                                    <i class="ace-icon fa fa-undo bigger-110"></i>
+                                    重置
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.row -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+
+<?php \Yaf\Loader::import(__FOOTER__); ?>
+
+<script>
+    $.hight_nav('<?php echo base_url('admin/setting/index');?>');
+    $(function (e) {
+        yboard.init();
+    });
+
+</script>
+</body>
+</html>

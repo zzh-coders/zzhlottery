@@ -12,6 +12,7 @@ class IndexController extends CommonController {
 
     private $uid;
 
+
     /**
      * 全局初始化
      */
@@ -33,6 +34,9 @@ class IndexController extends CommonController {
             if (!$this->uid) {
                 $this->error('token非法');
             }
+            $setting_service = $this->loadService('Setting');
+            global $setting;
+            $setting = $setting_service->getBykeys();
         }
 
     }
@@ -117,8 +121,9 @@ class IndexController extends CommonController {
         $date                = CUR_DATE;
         $lottery_service     = $this->loadService('Lottery');
         $is_today_add_chance = $lottery_service->isTodayAddChance($uid, $date);
-        if (!$is_today_add_chance) {
-            $lottery_service->incChance($uid, $date, $lottery_service->init_chance);
+        $init_chance         = getSetting('init_chance');
+        if (!$is_today_add_chance && $init_chance) {
+            $lottery_service->incChance($uid, $date, $init_chance);
         }
 
         $prize_array = $lottery_service->getPrize();

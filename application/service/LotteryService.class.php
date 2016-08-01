@@ -11,12 +11,6 @@
 namespace Yboard;
 
 class LotteryService extends CommonService {
-
-    /**
-     * 每个用户抽奖次数每天初始值
-     * @var int
-     */
-    public $init_chance = 5;
     /**
      * 谢谢参与的奖品id
      * @var int
@@ -27,6 +21,13 @@ class LotteryService extends CommonService {
      * @var int
      */
     private $again_win_pid = 5;
+
+    public function __construct() {
+        $not_win_pid         = getSetting('not_win_pid');
+        $this->not_win_pid   = $not_win_pid ? $not_win_pid : 0;
+        $again_win_pid       = getSetting('again_win_pid');
+        $this->again_win_pid = $again_win_pid ? $again_win_pid : 0;
+    }
 
     /**
      * 抽奖操作

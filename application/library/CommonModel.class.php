@@ -96,4 +96,8 @@ class CommonModel extends Model {
 
         return $this->update($this->_table, $data, [$this->_pk => $id]);
     }
+
+    public function getAll() {
+        return $this->select($this->_table, '*');
+    }
 }

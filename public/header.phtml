@@ -74,9 +74,6 @@
         <div class="navbar-buttons navbar-header pull-right" role="navigation">
             <ul class="nav ace-nav">
                 <?php
-                if (!isset($userinfo) || !$userinfo) {
-                    $userinfo = getSession('userinfo');// 这里多进行几次的loadFile之后会出现传值有问题
-                }
                 if (isset($userinfo) && $userinfo) { ?>
                     <li class="light-blue">
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">

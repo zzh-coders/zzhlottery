@@ -1,4 +1,4 @@
-<?php loadFile(__HEADER__); ?>
+<?php \Yaf\Loader::import(__HEADER__); ?>
 
 <div class="row">
     <div class="col-xs-12">
@@ -36,7 +36,7 @@
     </div><!-- /.col -->
 </div><!-- /.row -->
 
-<?php loadFile(__FOOTER__); ?>
+<?php \Yaf\Loader::import(__FOOTER__); ?>
 
 <script>
     $.hight_nav('<?php echo base_url('admin/admins/index');?>');

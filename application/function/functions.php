@@ -706,3 +706,9 @@ function loadFile($files) {
         }
     }
 }
+
+function getSetting($key) {
+    global $setting;
+
+    return isset($setting[$key]) ? $setting[$key] : '';
+}

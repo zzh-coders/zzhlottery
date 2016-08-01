@@ -12,7 +12,7 @@
 class FileController extends CommonController {
 
     public function uploadAction() {
-        loadFile('Upload.class.php');
+        \Yaf\Loader::import('Upload.class.php');
         $upload            = new \Yboard\Upload();// 实例化上传类
         $upload->maxSize   = 3145728;// 设置附件上传大小
         $upload->allowExts = array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型

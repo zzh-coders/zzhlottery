@@ -35,8 +35,16 @@ class LotteryService extends CommonService {
      * @param $date
      */
     public function lottery($uid, $date) {
-        $lottery_num = $this->getUserChance($uid, $date);
-        if (!$lottery_num) {
+        $chance_model = $this->loadModel('Chance');
+        $prize_model  = $this->loadModel('Prize');
+        //这里用redis的dec(递减操作，防止大并发多抽奖问题出现)
+        //原先是先去查找数据库，这里会有数据库网络堵塞，IO堵塞问题
+        $dec_lottery_num = $chance_model->updateUserChanceCache($uid, $date, -1);
+//        $lottery_num     = $this->getUserChance($uid, $date);
+        //因为这里是递减过的，所以判断条件为<0
+        if ($dec_lottery_num < 0) {
+            $chance_model->updateUserChanceCache($uid, $date, 1);
+
             return $this->returnInfo(0, '你已经没有抽奖机会了');
         }
 
@@ -50,19 +58,29 @@ class LotteryService extends CommonService {
 
         $win_pid = $this->getRand($prize_lottery_array);
 
-        /**
-         * 取出来的中奖数据不存在或则奖品库存为0 或则小于0，则置为谢谢参与
-         */
-        if (!isset($prize_array[$win_pid]) || (empty($prize_array[$win_pid])) ||
-            (isset($prize_array[$win_pid]['p_inventory']) && $prize_array[$win_pid]['p_inventory'] <= 0)
-        ) {
-            $win_pid = $this->not_win_pid;
+        //不是谢谢参与和再来一次的话，则进行奖品库存减一
+        if (!in_array($win_pid, [$this->again_win_pid, $this->not_win_pid])) {
+            if (!isset($prize_array[$win_pid]) || (empty($prize_array[$win_pid]))) {
+                $win_pid = $this->not_win_pid;
+            } else {
+                $p_inventory = $prize_model->increaseInventoryCache($win_pid, -1);
+                if ($p_inventory < 0) {
+                    $chance_model->updateUserChanceCache($uid, $date, 1);
+                    $prize_model->increaseInventoryCache($win_pid, 1);
+
+                    return $this->returnInfo(0, '奖品没有库存了哦');
+                }
+            }
+
         }
 
         //如果不是谢谢参与，则进行中奖信息的写入
         if ($win_pid != $this->not_win_pid) {
             $ret = $this->winning($win_pid, $uid, $date);
             if (!$ret['state']) {
+                $chance_model->updateUserChanceCache($uid, $date, 1);
+                $prize_model->increaseInventoryCache($win_pid, 1);
+
                 return $this->returnInfo(0, $ret['message']);
             }
         }
@@ -71,12 +89,25 @@ class LotteryService extends CommonService {
         if ($win_pid != $this->again_win_pid) {
             $ret = $this->decChance($uid, $date, 1);
             if (!$ret['state']) {
+                $chance_model->updateUserChanceCache($uid, $date, 1);
+                $prize_model->increaseInventoryCache($win_pid, 1);
+
                 return $this->returnInfo(0, $ret['message']);
             }
         }
 
-        return $this->returnInfo(1, '抽奖成功', ['p_id' => $win_pid, 'lottery_num' => $lottery_num - 1]);
+        if (!in_array($win_pid, [$this->again_win_pid, $this->not_win_pid])) {
+            if (!$prize_model->increaseInventory($win_pid, -1)) {
+                $chance_model->updateUserChanceCache($uid, $date, 1);
+                $prize_model->increaseInventoryCache($win_pid, 1);
+
+                return $this->returnInfo(0, '奖品库存错误');
+            }
+        }
+
+        return $this->returnInfo(1, '抽奖成功', ['p_id' => $win_pid, 'lottery_num' => $dec_lottery_num]);
     }
+
 
     /**
      * 今天抽奖机会
@@ -235,10 +266,17 @@ class LotteryService extends CommonService {
      * @return bool
      */
     public function isTodayAddChance($uid, $date) {
-        $chance_model = $this->loadModel('Chance');
-        $chance_info  = $chance_model->getUserChance($uid, $date);
+        $key         = str_replace(['{uid}', '{today}'], [$uid, $date], USER_ISCHANCE_KEY);
+        $redis_class = memory();
+        if ($redis_class->increment($key, 1) == 1) {
+            $chance_model = $this->loadModel('Chance');
+            $chance_info  = $chance_model->getUserChance($uid, $date);
 
-        return $chance_info ? true : false;
+            return $chance_info ? true : false;
+        }
+
+        return true;
+
     }
 
     /**
@@ -305,5 +343,17 @@ class LotteryService extends CommonService {
         unset($chance_info);
 
         return $this->returnInfo(1, '机会增加成功');
+    }
+
+    public function initChance($uid, $date) {
+        $chance_model        = $this->loadModel('Chance');
+        $is_today_add_chance = $this->isTodayAddChance($uid, $date);
+        $init_chance         = getSetting('init_chance');
+        if (!$is_today_add_chance && $init_chance) {
+            $this->incChance($uid, $date, $init_chance);
+            $chance_model->updateUserChanceCache($uid, $date, (int)$init_chance);
+        }
+
+        return true;
     }
 }

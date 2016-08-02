@@ -98,6 +98,6 @@ class CommonModel extends Model {
     }
 
     public function getAll() {
-        return $this->select($this->_table, '*');
+        return $this->select($this->_table, '*', []);
     }
 }

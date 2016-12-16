@@ -54,8 +54,10 @@ class SettingService extends CommonService {
         if ($keys && is_array($keys)) {
             $setting = $this->setting_model->getByIds($keys);
         }
-        foreach ($setting as $key => $value) {
-            $result_data[$value['skey']] = $this->unSetPackValue($value['skey'], $value['svalue']);
+        if ($setting) {
+            foreach ($setting as $key => $value) {
+                $result_data[$value['skey']] = $this->unSetPackValue($value['skey'], $value['svalue']);
+            }
         }
 
         return $result_data;

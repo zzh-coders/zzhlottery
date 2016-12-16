@@ -1,6 +1,6 @@
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`zzh_lottery` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`lottery` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 
-USE `zzh_lottery`;
+USE `lottery`;
 
 /*Table structure for table `lty_admin` */
 

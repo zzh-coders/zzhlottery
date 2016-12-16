@@ -64,9 +64,20 @@ class PrizeModel extends CommonModel {
         return $this->update($this->_table, $update_data, ['p_id' => (int)$p_id]);
     }
 
+    public function increaseInventoryCache($p_id, $p_inventory) {
+        $key         = $this->getInventoryCacheKey($p_id);
+        $redis_class = memory();
+
+        return $redis_class->increment($key, (int)$p_inventory);
+    }
+
+    private function getInventoryCacheKey($pid) {
+        return str_replace('{p_id}', $pid, INVENTORY_KEY);
+    }
+
 
     public function getAllPrize() {
-        return $this->select($this->_table, '*', []);
+        return parent::getAll();
     }
 
 }

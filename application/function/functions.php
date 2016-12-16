@@ -437,9 +437,14 @@ function debug($arr) {
 function memory() {
     $cache = Yaf\Registry::get('Redis');
     if (!$cache) {
-        loadFile('Redis .class.php');
-        $cache = new \Yboard\Redis();
-        Yaf\Registry::set('Redis', $cache);
+        \Yaf\Loader::import('Redis.class.php');
+        try{
+            $cache = new \Yboard\Redis();
+        }catch (Exception $e){
+            echo $e->getMessage();
+        }
+
+        \Yaf\Registry::set('Redis', $cache);
     }
 
     return $cache;
@@ -708,7 +713,7 @@ function loadFile($files) {
 }
 
 function getSetting($key) {
-    global $setting;
+    $setting = Yaf\Registry::get('setting');
 
     return isset($setting[$key]) ? $setting[$key] : '';
 }

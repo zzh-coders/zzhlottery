@@ -35,4 +35,15 @@ class ChanceModel extends CommonModel {
 
         return $this->get($this->_table, '*', ['c_uid' => $uid]);
     }
+
+    public function updateUserChanceCache($uid, $date, $num) {
+        $key         = $this->getUserChanceCacheKey($uid, $date);
+        $redis_class = memory();
+
+        return $redis_class->increment($key, (int)$num);
+    }
+
+    public function getUserChanceCacheKey($uid, $date) {
+        return str_replace(['{uid}', '{today}'], [$uid, $date], USER_CHANCE_KEY);
+    }
 }

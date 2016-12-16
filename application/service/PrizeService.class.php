@@ -68,7 +68,8 @@ class PrizeService extends CommonService {
             $upload_data         = $upload_result['extra'];
             $data['p_image_uri'] = $upload_data['p_image_uri']['savepath'] . $upload_data['p_image_uri']['savename'];
         }
-        if ($item_id = $prizer_model->save($data)) {
+        if ($p_id = $prizer_model->save($data)) {
+            $prizer_model->increaseInventoryCache($p_id, $p_inventory);
 
             return $this->returnInfo(1, '奖品添加成功');
         }
@@ -106,7 +107,9 @@ class PrizeService extends CommonService {
             $data['p_image_uri'] = $upload_data['p_image_uri']['savepath'] . $upload_data['p_image_uri']['savename'];
         }
         if ($prizer_model->updateById($p_id, $data) !== false) {
-            $prizer_model->increaseInventory($p_id, $p_inventory);
+            if ($prizer_model->increaseInventory($p_id, $p_inventory)) {
+                $prizer_model->increaseInventoryCache($p_id, $p_inventory);
+            }
 
             return $this->returnInfo(1, '奖品编辑成功');
         }

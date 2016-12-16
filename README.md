@@ -34,14 +34,14 @@ yaf.use_spl_autoload = 1; 开启sql_autoload,这里的上传累以及日志类�
 
 ;域名配置
 
-base_url = 'http://zzh-lottery.yboard.cn'
+base_url = 'http://lottery.yboard.cn'
 
 
 ;数据库配置
 
 db.type = mysql
 
-db.dbname = zzh-lottery
+db.dbname = lottery
 
 db.pconnect = 1
 

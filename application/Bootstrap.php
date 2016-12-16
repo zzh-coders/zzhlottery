@@ -14,6 +14,8 @@ class Bootstrap extends Yaf\Bootstrap_Abstract {
         //把配置保存起来
         $arrConfig = Yaf\Application::app()->getConfig();
         Yaf\Registry::set('config', $arrConfig);
+        Yaf\Loader::import(APP_PATH . "/conf/constants.php");
+        Yaf\Loader::import(APP_PATH . "/conf/redis_key.php");
     }
 
     public function _initCore() {
@@ -71,7 +73,6 @@ class Bootstrap extends Yaf\Bootstrap_Abstract {
     public function _initAutoloader(Yaf\Dispatcher $dispatcher) {
         Yaf\Loader::import(FUNC_PATH . '/functions.php');
         loadFile([
-            APP_PATH . "/conf/constants.php",
             'CommonController.class.php',
             MODULES_PATH . '/Admin/controllers/Admin.php'
         ]);

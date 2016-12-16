@@ -8,14 +8,15 @@ class Redis {
     private $timeout;
 
     public function __construct($data = null) {
-        $redis = new Redis();
+        $redis = new \Redis();
         if ($redis == false) {
             return false;
         }
         $config = getConfig('redis/proxy');
+        $config_array = $config->toArray();
         $this->redis = $redis;
-        $rand_key = array_rand($config);
-        $redis_server = $config[$rand_key];
+        $rand_key = array_rand($config_array);
+        $redis_server = $config_array[$rand_key];
         $this->host = $redis_server['server'];
         $this->port = $redis_server['port'];
         $this->timeout = $redis_server['timeout'] ? $redis_server['timeout'] : 2;

@@ -73,8 +73,7 @@ class Bootstrap extends Yaf\Bootstrap_Abstract {
         loadFile([
             APP_PATH . "/conf/constants.php",
             'CommonController.class.php',
-            MODULES_PATH . '/Admin/controllers/Admin.php',
-            MODULES_PATH . '/Api/controllers/Api.php'
+            MODULES_PATH . '/Admin/controllers/Admin.php'
         ]);
     }
 }
